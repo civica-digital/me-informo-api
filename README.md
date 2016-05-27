@@ -7,7 +7,7 @@ La plataforma que proponemos es lo que creemos que debió haber sido un portal d
 
 Este es el componente de la API, que busca mejorar la forma en la que se presenta la información de la plataforma aprovechando los endpoints que tiene disponibles. Nos encantaría que lo uses y la mejores para lo que necesites.
 
-Buscamos hacer merge con [Info-bazooka](https://github.com/tlacoyodefrijol/info-bazooka) eventualmente, cuando encontremos el endpoint para crear solicitudes.
+Buscamos hacer merge con [Info-bazooka](https://github.com/tlacoyodefrijol/info-bazooka) eventualmente, cuando logremos descifrar el endpoint para crear solicitudes.
 
 Puedes ver los endpoints que usamos de la Plataforma de transparencia en [este código](https://github.com/civica-digital/me-informo-api/blob/master/meinformoapi/calls.py)
 
