@@ -3,15 +3,19 @@ import pandas as pd
 import numpy as np
 
 from flask import Flask, Response, request, send_file
+from flask.ext.autodoc import Autodoc
 
 import meinformoapi.calls as calls
 import meinformoapi.tools as tools
 
 
 app = Flask(__name__)
+auto = Autodoc(app)
+
 current_entities = calls.entities()
 df_current_entities = pd.DataFrame(current_entities)
 states_list = list(np.unique(df_current_entities["estado"]))
+sectors_list = list(np.unique(df_current_entities["sector"]))
 
 
 def add_cors_headers(response):
@@ -24,8 +28,21 @@ def add_cors_headers(response):
     return response
 
 
+@app.route('/')
+def documentation():
+    return auto.html()
+
+
 @app.route('/search', methods=['GET'])
+@auto.doc()
 def get_search():
+    """
+    GET: Searches the Portal de Transparencia
+    [params]
+    query: Text to search <non escaped/string>
+    page: results page <non escaped/string>
+    resultspage: results to show per page <non escaped/string>
+    """
     query = request.args.get('query')
     page = request.args.get('page')
     resultspage = request.args.get('resultspage')
@@ -40,33 +57,74 @@ def get_search():
 
 
 @app.route('/entities/')
+@auto.doc()
 def get_entities():
+    """
+    GET: Gets all Entities on record
+    """
     output = current_entities
     return Response(dumps(output), mimetype='application/json')
 
 
 @app.route('/entities/<entity_id>')
+@auto.doc()
 def get_entity(entity_id):
+    """
+    GET: Gets entities marked with such id
+    """
     entity_id = str(entity_id)
     output = tools.filter_dict(current_entities,"id", [entity_id])
     return Response(dumps(output), mimetype='application/json')
 
 
+@app.route('/entities/sectors/')
+@auto.doc()
+def get_sectors():
+    """
+    GET: Gets the sectors on the database
+    """
+    output = sectors_list
+    return Response(dumps(output), mimetype='application/json')
+
+
+@app.route('/entities/sectors/<sector_id>')
+@auto.doc()
+def get_sector(sector_id):
+    """
+    GET: Gets all Entities on the required sector.
+    """
+    sector_id = str(sector_id)
+    output = tools.filter_dict(current_entities,"sector", [sector_id])
+    return Response(dumps(output), mimetype='application/json')
+
+
 @app.route('/entities/states/')
+@auto.doc()
 def get_state_entities():
+    """
+    GET: Gets all States on record
+    """
     output = states_list
     return Response(dumps(output), mimetype='application/json')
 
 
 @app.route('/entities/states/<state_id>')
+@auto.doc()
 def get_state(state_id):
+    """
+    GET: Gets all Entities on the selected state
+    """
     state_id = str(state_id)
     output = tools.filter_dict(current_entities,"estado", [state_id])
     return Response(dumps(output), mimetype='application/json')
 
 
 @app.route('/entities/states/<state_id>/sectors')
-def get_sectors(state_id):
+@auto.doc()
+def get_state_sectors(state_id):
+    """
+    GET: Gets all Sectors on state
+    """
     state_id = str(state_id)
     filter_state = tools.filter_dict(current_entities,"estado", [state_id])
     df_filter_state = pd.DataFrame(filter_state)
@@ -75,7 +133,11 @@ def get_sectors(state_id):
 
 
 @app.route('/entities/states/<state_id>/sectors/<sector_id>')
-def get_sector(state_id,sector_id):
+@auto.doc()
+def get_state_sector(state_id,sector_id):
+    """
+    GET: Gets all Entities on the selected sector and state
+    """
     state_id = str(state_id)
     sector_id = str(sector_id)
     filter_state = tools.filter_dict(current_entities,"estado", [state_id])
