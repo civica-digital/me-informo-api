@@ -42,6 +42,7 @@ def get_search():
     query: Text to search <non escaped/string>
     page: results page <non escaped/string>
     resultspage: results to show per page <non escaped/string>
+    https://meinformoapi.herokuapp.com/search?query=Estado&page=2&resultspage=25
     """
     query = request.args.get('query')
     page = request.args.get('page')
@@ -61,6 +62,7 @@ def get_search():
 def get_entities():
     """
     GET: Gets all Entities on record
+    https://meinformoapi.herokuapp.com/entities
     """
     output = current_entities
     return Response(dumps(output), mimetype='application/json')
@@ -71,6 +73,8 @@ def get_entities():
 def get_entity(entity_id):
     """
     GET: Gets entities marked with such id
+    Note: ids come from original site, may be duplicated.
+    https://meinformoapi.herokuapp.com/entities/130
     """
     entity_id = str(entity_id)
     output = tools.filter_dict(current_entities,"id", [entity_id])
@@ -82,6 +86,7 @@ def get_entity(entity_id):
 def get_sectors():
     """
     GET: Gets the sectors on the database
+    https://meinformoapi.herokuapp.com/entities/sectors/
     """
     output = sectors_list
     return Response(dumps(output), mimetype='application/json')
@@ -92,6 +97,7 @@ def get_sectors():
 def get_sector(sector_id):
     """
     GET: Gets all Entities on the required sector.
+    https://meinformoapi.herokuapp.com/entities/sectors/
     """
     sector_id = str(sector_id)
     output = tools.filter_dict(current_entities,"sector", [sector_id])
@@ -103,6 +109,7 @@ def get_sector(sector_id):
 def get_state_entities():
     """
     GET: Gets all States on record
+    https://meinformoapi.herokuapp.com/entities/states/
     """
     output = states_list
     return Response(dumps(output), mimetype='application/json')
@@ -113,6 +120,7 @@ def get_state_entities():
 def get_state(state_id):
     """
     GET: Gets all Entities on the selected state
+    https://meinformoapi.herokuapp.com/states/AGUASCALIENTES
     """
     state_id = str(state_id)
     output = tools.filter_dict(current_entities,"estado", [state_id])
@@ -124,6 +132,7 @@ def get_state(state_id):
 def get_state_sectors(state_id):
     """
     GET: Gets all Sectors on state
+    https://meinformoapi.herokuapp.com/entities/states/AGUASCALIENTES/sectors
     """
     state_id = str(state_id)
     filter_state = tools.filter_dict(current_entities,"estado", [state_id])
@@ -137,6 +146,7 @@ def get_state_sectors(state_id):
 def get_state_sector(state_id,sector_id):
     """
     GET: Gets all Entities on the selected sector and state
+    https://meinformoapi.herokuapp.com/entities/states/AGUASCALIENTES/sectors/Judicial
     """
     state_id = str(state_id)
     sector_id = str(sector_id)
