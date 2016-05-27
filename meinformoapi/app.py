@@ -97,7 +97,7 @@ def get_sectors():
 def get_sector(sector_id):
     """
     GET: Gets all Entities on the required sector.
-    https://meinformoapi.herokuapp.com/entities/sectors/
+    https://meinformoapi.herokuapp.com/entities/sectors/Ejecutivo
     """
     sector_id = str(sector_id)
     output = tools.filter_dict(current_entities,"sector", [sector_id])
