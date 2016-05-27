@@ -37,7 +37,7 @@ def documentation():
 @auto.doc()
 def get_search():
     """
-    GET: Searches the Portal de Transparencia
+    GET: Searches the Portal de Transparencia requests on a given query.
     [params]
     query: Text to search <non escaped/string>
     page: results page <non escaped/string>
