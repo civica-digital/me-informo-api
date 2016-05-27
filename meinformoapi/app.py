@@ -33,7 +33,7 @@ def documentation():
     return auto.html()
 
 
-@app.route('/search', methods=['GET'])
+@app.route('/requests/search', methods=['GET'])
 @auto.doc()
 def get_search():
     """
@@ -42,7 +42,7 @@ def get_search():
     query: Text to search <non escaped/string>
     page: results page <non escaped/string>
     resultspage: results to show per page <non escaped/string>
-    https://meinformoapi.herokuapp.com/search?query=Estado&page=2&resultspage=25
+    https://meinformoapi.herokuapp.com/requests/search?query=Estado&page=2&resultspage=25
     """
     query = request.args.get('query')
     page = request.args.get('page')
