@@ -1,5 +1,6 @@
 gunicorn==19.3.0
 requests
 flask
+flask-autodoc
 pandas
 numpy
