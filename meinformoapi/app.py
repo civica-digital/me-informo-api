@@ -120,7 +120,7 @@ def get_state_entities():
 def get_state(state_id):
     """
     GET: Gets all Entities on the selected state
-    https://meinformoapi.herokuapp.com/states/AGUASCALIENTES
+    https://meinformoapi.herokuapp.com/entities/states/AGUASCALIENTES
     """
     state_id = str(state_id)
     output = tools.filter_dict(current_entities,"estado", [state_id])
