@@ -1,8 +1,8 @@
-from json import dumps
 import pandas as pd
 import numpy as np
 
 from flask import Flask, Response, request, send_file
+from json import dumps
 from flask.ext.autodoc import Autodoc
 
 import meinformoapi.calls as calls
@@ -51,7 +51,7 @@ def get_search():
         query = "a"
     if page is None:
         page = "1"
-    if resultspage == None:
+    if resultspage is None:
         resultspage = "25"
     output = calls.foi_search(query,page,resultspage)
     return Response(dumps(output), mimetype='application/json')
